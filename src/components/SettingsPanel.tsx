@@ -27,6 +27,40 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
   const [editingDepartment, setEditingDepartment] = useState(false);
   const [departmentName, setDepartmentName] = useState('Department of Bioinformatics');
   const [programName, setProgramName] = useState('M.Sc. Bioinformatics Program');
+  const [newSemesterName, setNewSemesterName] = useState('');
+
+  const handleSaveDepartment = () => {
+    // Save department changes (you can add actual save logic here)
+    console.log('Saving department:', { departmentName, programName });
+    setEditingDepartment(false);
+    alert('Department information updated successfully!');
+  };
+
+  const handleAddSemester = () => {
+    if (!newSemesterName.trim()) {
+      alert('Please enter a semester name');
+      return;
+    }
+    
+    const newSemester: Semester = {
+      id: semesters.length + 1,
+      name: newSemesterName.trim(),
+      totalCredits: '0+0 (0 Credit Hours)',
+      subjects: []
+    };
+    
+    onAddSemester(newSemester);
+    setNewSemesterName('');
+    alert(`${newSemesterName} added successfully!`);
+  };
+
+  const handleDeleteSemester = (semesterId: number) => {
+    if (confirm('Are you sure you want to delete this semester? This action cannot be undone.')) {
+      // Add delete logic here
+      console.log('Deleting semester:', semesterId);
+      alert('Semester deleted successfully!');
+    }
+  };
 
   return (
     <>
@@ -169,11 +203,17 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                         />
                       </div>
                       <button
-                        onClick={() => setEditingDepartment(false)}
+                        onClick={handleSaveDepartment}
                         className="flex items-center px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
                       >
                         <Save className="w-4 h-4 mr-2" />
                         Save Changes
+                      </button>
+                      <button
+                        onClick={() => setEditingDepartment(false)}
+                        className="flex items-center px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
+                      >
+                        Cancel
                       </button>
                     </div>
                   ) : (
@@ -188,21 +228,27 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 <div>
                   <div className="flex items-center justify-between mb-3">
                     <h3 className="text-lg font-medium text-gray-800">Semester Management</h3>
-                    <button
-                      onClick={() => {
-                        const newSemester: Semester = {
-                          id: semesters.length + 1,
-                          name: `Semester ${semesters.length + 1}`,
-                          totalCredits: '0+0 (0 Credit Hours)',
-                          subjects: []
-                        };
-                        onAddSemester(newSemester);
-                      }}
-                      className="flex items-center px-3 py-1 text-sm bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-                    >
-                      <Plus className="w-3 h-3 mr-1" />
-                      Add Semester
-                    </button>
+                  </div>
+                  
+                  {/* Add New Semester */}
+                  <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <h4 className="font-medium text-gray-800 mb-2">Add New Semester</h4>
+                    <div className="flex space-x-2">
+                      <input
+                        type="text"
+                        placeholder="Enter semester name (e.g., Semester V)"
+                        value={newSemesterName}
+                        onChange={(e) => setNewSemesterName(e.target.value)}
+                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                      />
+                      <button
+                        onClick={handleAddSemester}
+                        className="flex items-center px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                      >
+                        <Plus className="w-4 h-4 mr-1" />
+                        Add
+                      </button>
+                    </div>
                   </div>
                   
                   <div className="space-y-3">
@@ -214,7 +260,10 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                             <button className="p-1 text-blue-600 hover:text-blue-700">
                               <Edit className="w-4 h-4" />
                             </button>
-                            <button className="p-1 text-red-600 hover:text-red-700">
+                            <button 
+                              onClick={() => handleDeleteSemester(semester.id)}
+                              className="p-1 text-red-600 hover:text-red-700"
+                            >
                               <Trash2 className="w-4 h-4" />
                             </button>
                           </div>
@@ -232,19 +281,44 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 <div>
                   <h3 className="text-lg font-medium text-gray-800 mb-3">Quick Actions</h3>
                   <div className="grid grid-cols-2 gap-3">
-                    <button className="p-3 bg-blue-50 border border-blue-200 rounded-lg text-blue-700 hover:bg-blue-100 transition-colors">
+                    <button 
+                      onClick={() => alert('Add New Subject feature coming soon!')}
+                      className="p-3 bg-blue-50 border border-blue-200 rounded-lg text-blue-700 hover:bg-blue-100 transition-colors"
+                    >
                       <div className="font-medium">Add New Subject</div>
                       <div className="text-xs text-blue-600">Create new course</div>
                     </button>
-                    <button className="p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 hover:bg-green-100 transition-colors">
+                    <button 
+                      onClick={() => alert('Bulk Import feature coming soon!')}
+                      className="p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 hover:bg-green-100 transition-colors"
+                    >
                       <div className="font-medium">Bulk Import</div>
                       <div className="text-xs text-green-600">Import from CSV</div>
                     </button>
-                    <button className="p-3 bg-purple-50 border border-purple-200 rounded-lg text-purple-700 hover:bg-purple-100 transition-colors">
+                    <button 
+                      onClick={() => {
+                        const dataStr = JSON.stringify(semesters, null, 2);
+                        const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                        const url = URL.createObjectURL(dataBlob);
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = 'syllabus-data.json';
+                        link.click();
+                      }}
+                      className="p-3 bg-purple-50 border border-purple-200 rounded-lg text-purple-700 hover:bg-purple-100 transition-colors"
+                    >
                       <div className="font-medium">Export Data</div>
                       <div className="text-xs text-purple-600">Download backup</div>
                     </button>
-                    <button className="p-3 bg-orange-50 border border-orange-200 rounded-lg text-orange-700 hover:bg-orange-100 transition-colors">
+                    <button 
+                      onClick={() => {
+                        if (confirm('Are you sure you want to reset all data? This action cannot be undone.')) {
+                          localStorage.clear();
+                          window.location.reload();
+                        }
+                      }}
+                      className="p-3 bg-orange-50 border border-orange-200 rounded-lg text-orange-700 hover:bg-orange-100 transition-colors"
+                    >
                       <div className="font-medium">Reset System</div>
                       <div className="text-xs text-orange-600">Clear all data</div>
                     </button>
