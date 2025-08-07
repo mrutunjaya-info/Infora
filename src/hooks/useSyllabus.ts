@@ -101,11 +101,16 @@ export const useSyllabus = () => {
     saveSyllabus(updatedSemesters);
   };
 
+  const addSemester = (semester: Semester) => {
+    const updatedSemesters = [...semesters, semester];
+    saveSyllabus(updatedSemesters);
+  };
   return {
     semesters,
     updateSubject,
     addUnit,
     updateUnit,
     deleteUnit,
+    addSemester,
   };
 };
