@@ -23,7 +23,7 @@ function App() {
   
   const { notes, addNote, updateNote, deleteNote, getNotesForSubject } = useNotes();
   const { pdfs, addPDF, updatePDF, deletePDF, getPDFsForSubject } = usePDFs();
-  const { semesters, updateSubject, addUnit, updateUnit, deleteUnit } = useSyllabus();
+  const { semesters, updateSubject, addUnit, updateUnit, deleteUnit, addSemester } = useSyllabus();
 
   const currentSemester = semesters.find(sem => sem.id === selectedSemester);
 
@@ -237,10 +237,7 @@ function App() {
           onSemesterChange={setSelectedSemester}
           semesters={semesters}
           onUpdateSemester={updateSubject}
-          onAddSemester={(semester) => {
-            // Add new semester functionality
-            console.log('Add semester:', semester);
-          }}
+          onAddSemester={addSemester}
           onClose={() => setShowSettings(false)}
         />
       )}
