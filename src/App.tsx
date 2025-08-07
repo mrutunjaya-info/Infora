@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, Moon, Sun } from 'lucide-react';
+import { BookOpen, Settings } from 'lucide-react';
 import { Subject, Note, PDFResource } from './types/syllabus';
 import { useNotes } from './hooks/useNotes';
 import { usePDFs } from './hooks/usePDFs';
@@ -10,10 +10,12 @@ import NotesManager from './components/NotesManager';
 import NotesReader from './components/NotesReader';
 import PDFManager from './components/PDFManager';
 import GovernmentHeader from './components/GovernmentHeader';
+import SettingsPanel from './components/SettingsPanel';
 
 function App() {
   const [selectedSemester, setSelectedSemester] = useState(1);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [showSettings, setShowSettings] = useState(false);
   const [readingSubject, setReadingSubject] = useState<{ subject: Subject; semesterId: number } | null>(null);
   const [notesManager, setNotesManager] = useState<{ subjectCode: string; subjectName: string; semesterId: number } | null>(null);
   const [pdfManager, setPdfManager] = useState<{ subjectCode: string; subjectName: string; semesterId: number } | null>(null);
@@ -79,7 +81,7 @@ function App() {
   return (
     <div className="min-h-screen bg-white text-gray-900">
       {/* Government Header */}
-      <GovernmentHeader isDarkMode={isDarkMode} />
+      <GovernmentHeader />
 
       <main className="bg-white">
         {/* Main Content Area */}
@@ -102,6 +104,16 @@ function App() {
                       <span className="text-sm text-gray-600">
                         {(currentSemester.subjects || []).length} Subjects
                       </span>
+                      <span className="text-xs text-gray-500">
+                        Last Updated: {new Date().toLocaleDateString('en-IN')}
+                      </span>
+                      <button
+                        onClick={() => setShowSettings(true)}
+                        className="flex items-center px-2 py-1 text-xs bg-gray-100 text-gray-700 hover:bg-gray-200 rounded transition-colors"
+                      >
+                        <Settings className="w-3 h-3 mr-1" />
+                        Settings
+                      </button>
                       <select
                         value={selectedSemester}
                         onChange={(e) => setSelectedSemester(Number(e.target.value))}
@@ -118,13 +130,13 @@ function App() {
               </div>
 
               {/* Subjects Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className={viewMode === 'grid' ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" : "space-y-2"}>
                 {(currentSemester.subjects || []).map((subject) => (
                   <SubjectCard
                     key={subject.code}
                     subject={subject}
                     semesterId={selectedSemester}
-                    isDarkMode={isDarkMode}
+                    viewMode={viewMode}
                     onReadSubject={handleReadSubject}
                     onViewNotes={handleViewNotes}
                     onViewPDFs={handleViewPDFs}
@@ -151,7 +163,7 @@ function App() {
         <DistractionFreeReader
           subject={readingSubject.subject}
           semesterId={readingSubject.semesterId}
-          isDarkMode={isDarkMode}
+          isDarkMode={false}
           onClose={() => setReadingSubject(null)}
           onCreateNote={(title, content) => {
             addNote({
@@ -182,7 +194,7 @@ function App() {
           subjectCode={notesManager.subjectCode}
           subjectName={notesManager.subjectName}
           semesterId={notesManager.semesterId}
-          isDarkMode={isDarkMode}
+          isDarkMode={false}
           notes={getNotesForSubject(notesManager.subjectCode, notesManager.semesterId)}
           onClose={() => setNotesManager(null)}
           onAddNote={addNote}
@@ -198,7 +210,7 @@ function App() {
           subjectCode={pdfManager.subjectCode}
           subjectName={pdfManager.subjectName}
           semesterId={pdfManager.semesterId}
-        isDarkMode={isDarkMode}
+          isDarkMode={false}
           pdfs={getPDFsForSubject(pdfManager.subjectCode, pdfManager.semesterId)}
           onClose={() => setPdfManager(null)}
           onAddPDF={addPDF}
@@ -211,8 +223,25 @@ function App() {
       {readingNote && (
         <NotesReader
           note={readingNote}
-        isDarkMode={isDarkMode}
+          isDarkMode={false}
           onClose={() => setReadingNote(null)}
+        />
+      )}
+
+      {/* Settings Panel */}
+      {showSettings && (
+        <SettingsPanel
+          viewMode={viewMode}
+          onViewModeChange={setViewMode}
+          selectedSemester={selectedSemester}
+          onSemesterChange={setSelectedSemester}
+          semesters={semesters}
+          onUpdateSemester={updateSubject}
+          onAddSemester={(semester) => {
+            // Add new semester functionality
+            console.log('Add semester:', semester);
+          }}
+          onClose={() => setShowSettings(false)}
         />
       )}
     </div>
