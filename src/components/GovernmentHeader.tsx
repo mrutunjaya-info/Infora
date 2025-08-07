@@ -1,12 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface GovernmentHeaderProps {
-  isDarkMode: boolean;
+  isDarkMode: boolean; // You can choose to use this or remove if unused
 }
 
 const GovernmentHeader: React.FC<GovernmentHeaderProps> = ({ isDarkMode }) => {
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (date: Date) => {
+    return date.toLocaleString('en-IN', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      timeZone: 'Asia/Kolkata',
+    });
+  };
+
   return (
     <>
+      {/* Real-time Clock Footer */}
+<div className="fixed bottom-0 w-full bg-gray-50 border-t border-gray-200 z-50">
+  <div className="max-w-full mx-auto px-4 py-1">
+    <div className="flex items-center justify-between text-xs">
+      <div className="flex items-center space-x-4">
+        <span className="text-gray-700 font-medium">🕐 {formatTime(currentTime)}</span>
+      </div>
+      <div className="flex items-center space-x-4">
+        <span className="text-gray-600">IST (Indian Standard Time)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
       {/* Top Government Bar */}
       <div className="bg-white border-b border-gray-300">
         <div className="max-w-full mx-auto px-4 py-1">
@@ -29,7 +65,6 @@ const GovernmentHeader: React.FC<GovernmentHeaderProps> = ({ isDarkMode }) => {
           <div className="flex items-center justify-between">
             {/* Left: Government Emblem */}
             <div className="flex items-center space-x-4">
-              {/* National Emblem */}
               <div className="flex items-center space-x-3">
                 <img 
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Emblem_of_India.svg/100px-Emblem_of_India.svg.png" 
