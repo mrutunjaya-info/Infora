@@ -48,9 +48,9 @@ const GovernmentHeader: React.FC<GovernmentHeaderProps> = ({ isDarkMode }) => {
         <div className="max-w-full mx-auto px-4 py-1">
           <div className="flex items-center justify-between text-xs">
             <div className="flex items-center space-x-4">
-              <span className="text-gray-700">Government of India</span>
+              <span className="text-gray-700">Bioinformatics of India</span>
               <span className="text-gray-500">•</span>
-              <span className="text-gray-700">Ministry of Education</span>
+              <span className="text-gray-700">Infora of Education</span>
             </div>
             <div className="flex items-center space-x-4">
               <span className="text-gray-600">Last Updated: {new Date().toLocaleDateString('en-IN')}</span>
@@ -72,8 +72,8 @@ const GovernmentHeader: React.FC<GovernmentHeaderProps> = ({ isDarkMode }) => {
                   className="w-8 h-8"
                 />
                 <div>
-                  <h1 className="text-sm font-bold text-gray-900">Government of India</h1>
-                  <p className="text-xs text-gray-700">Ministry of Education • सत्यमेव जयते</p>
+                  <h1 className="text-sm font-bold text-gray-900">Bioinformatics of India</h1>
+                  <p className="text-xs text-gray-700">Infora of Education • सत्यमेव जयते</p>
                 </div>
               </div>
             </div>
@@ -84,7 +84,7 @@ const GovernmentHeader: React.FC<GovernmentHeaderProps> = ({ isDarkMode }) => {
                 <div className="text-xs font-medium text-gray-700">Digital India Initiative</div>
               </div>
               <img 
-                src="https://www.digitalindia.gov.in/themes/custom/digital_india/logo.png" 
+                src="https://www.ux4g.gov.in/assets/img/logos-page/nic-logo.jpg" 
                 alt="Digital India" 
                 className="w-6 h-6"
                 onError={(e) => {
