@@ -3,6 +3,10 @@ import { X, Grid, List, Plus, Edit, Save, Trash2 } from 'lucide-react';
 import { Semester, Subject } from '../types/syllabus';
 
 interface SettingsPanelProps {
+  departmentName: string;
+  programName: string;
+  onDepartmentChange: (name: string) => void;
+  onProgramChange: (name: string) => void;
   viewMode: 'grid' | 'list';
   onViewModeChange: (mode: 'grid' | 'list') => void;
   selectedSemester: number;
@@ -14,6 +18,10 @@ interface SettingsPanelProps {
 }
 
 const SettingsPanel: React.FC<SettingsPanelProps> = ({
+  departmentName: propDepartmentName,
+  programName: propProgramName,
+  onDepartmentChange,
+  onProgramChange,
   viewMode,
   onViewModeChange,
   selectedSemester,
@@ -25,15 +33,27 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<'view' | 'manage'>('view');
   const [editingDepartment, setEditingDepartment] = useState(false);
-  const [departmentName, setDepartmentName] = useState('Department of Bioinformatics');
-  const [programName, setProgramName] = useState('M.Sc. Bioinformatics Program');
+  const [localDepartmentName, setLocalDepartmentName] = useState(propDepartmentName);
+  const [localProgramName, setLocalProgramName] = useState(propProgramName);
   const [newSemesterName, setNewSemesterName] = useState('');
 
+  // Update local state when props change
+  React.useEffect(() => {
+    setLocalDepartmentName(propDepartmentName);
+    setLocalProgramName(propProgramName);
+  }, [propDepartmentName, propProgramName]);
+
   const handleSaveDepartment = () => {
-    // Save department changes (you can add actual save logic here)
-    console.log('Saving department:', { departmentName, programName });
+    // Save department changes to parent component and localStorage
+    onDepartmentChange(localDepartmentName);
+    onProgramChange(localProgramName);
+    
+    // Save to localStorage for persistence
+    localStorage.setItem('department-name', localDepartmentName);
+    localStorage.setItem('program-name', localProgramName);
+    
     setEditingDepartment(false);
-    alert('Department information updated successfully!');
+    alert('Department information updated and saved successfully!');
   };
 
   const handleAddSemester = () => {
@@ -65,11 +85,11 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
   return (
     <>
       {/* Backdrop */}
-      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col">
+      <div className="fixed inset-0 bg-black bg-opacity-50 z-[60] flex items-center justify-center p-2 md:p-4">
+        <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[95vh] md:max-h-[90vh] flex flex-col">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b">
-            <h2 className="text-xl font-semibold text-gray-800">System Settings</h2>
+            <h2 className="text-lg md:text-xl font-semibold text-gray-800">System Settings</h2>
             <button
               onClick={onClose}
               className="p-2 text-gray-500 hover:text-gray-700 transition-colors"
@@ -79,10 +99,10 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
           </div>
 
           {/* Tabs */}
-          <div className="flex border-b">
+          <div className="flex border-b overflow-x-auto">
             <button
               onClick={() => setActiveTab('view')}
-              className={`px-4 py-2 text-sm font-medium ${
+              className={`px-4 py-2 text-sm font-medium whitespace-nowrap ${
                 activeTab === 'view'
                   ? 'text-blue-600 border-b-2 border-blue-600'
                   : 'text-gray-500 hover:text-gray-700'
@@ -92,7 +112,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
             </button>
             <button
               onClick={() => setActiveTab('manage')}
-              className={`px-4 py-2 text-sm font-medium ${
+              className={`px-4 py-2 text-sm font-medium whitespace-nowrap ${
                 activeTab === 'manage'
                   ? 'text-blue-600 border-b-2 border-blue-600'
                   : 'text-gray-500 hover:text-gray-700'
@@ -109,10 +129,10 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 {/* View Mode */}
                 <div>
                   <h3 className="text-lg font-medium text-gray-800 mb-3">Display Mode</h3>
-                  <div className="flex space-x-4">
+                  <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
                     <button
                       onClick={() => onViewModeChange('grid')}
-                      className={`flex items-center px-4 py-2 rounded-lg border ${
+                      className={`flex items-center justify-center px-4 py-2 rounded-lg border ${
                         viewMode === 'grid'
                           ? 'bg-blue-50 border-blue-300 text-blue-700'
                           : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
@@ -123,7 +143,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                     </button>
                     <button
                       onClick={() => onViewModeChange('list')}
-                      className={`flex items-center px-4 py-2 rounded-lg border ${
+                      className={`flex items-center justify-center px-4 py-2 rounded-lg border ${
                         viewMode === 'list'
                           ? 'bg-blue-50 border-blue-300 text-blue-700'
                           : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
@@ -138,7 +158,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 {/* Semester Selection */}
                 <div>
                   <h3 className="text-lg font-medium text-gray-800 mb-3">Active Semester</h3>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                     {semesters.map((semester) => (
                       <button
                         key={semester.id}
@@ -186,8 +206,8 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                         </label>
                         <input
                           type="text"
-                          value={departmentName}
-                          onChange={(e) => setDepartmentName(e.target.value)}
+                          value={localDepartmentName}
+                          onChange={(e) => setLocalDepartmentName(e.target.value)}
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                       </div>
@@ -197,29 +217,35 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                         </label>
                         <input
                           type="text"
-                          value={programName}
-                          onChange={(e) => setProgramName(e.target.value)}
+                          value={localProgramName}
+                          onChange={(e) => setLocalProgramName(e.target.value)}
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                       </div>
-                      <button
-                        onClick={handleSaveDepartment}
-                        className="flex items-center px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-                      >
-                        <Save className="w-4 h-4 mr-2" />
-                        Save Changes
-                      </button>
-                      <button
-                        onClick={() => setEditingDepartment(false)}
-                        className="flex items-center px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
-                      >
-                        Cancel
-                      </button>
+                      <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                        <button
+                          onClick={handleSaveDepartment}
+                          className="flex items-center justify-center px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                        >
+                          <Save className="w-4 h-4 mr-2" />
+                          Save Changes
+                        </button>
+                        <button
+                          onClick={() => {
+                            setEditingDepartment(false);
+                            setLocalDepartmentName(propDepartmentName);
+                            setLocalProgramName(propProgramName);
+                          }}
+                          className="flex items-center justify-center px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     </div>
                   ) : (
                     <div className="bg-gray-50 p-4 rounded-lg">
-                      <div className="text-sm text-gray-600">Department: <span className="font-medium text-gray-800">{departmentName}</span></div>
-                      <div className="text-sm text-gray-600">Program: <span className="font-medium text-gray-800">{programName}</span></div>
+                      <div className="text-sm text-gray-600">Department: <span className="font-medium text-gray-800">{propDepartmentName}</span></div>
+                      <div className="text-sm text-gray-600">Program: <span className="font-medium text-gray-800">{propProgramName}</span></div>
                     </div>
                   )}
                 </div>
@@ -233,17 +259,17 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                   {/* Add New Semester */}
                   <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
                     <h4 className="font-medium text-gray-800 mb-2">Add New Semester</h4>
-                    <div className="flex space-x-2">
+                    <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                       <input
                         type="text"
                         placeholder="Enter semester name (e.g., Semester V)"
                         value={newSemesterName}
                         onChange={(e) => setNewSemesterName(e.target.value)}
-                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 w-full sm:w-auto"
                       />
                       <button
                         onClick={handleAddSemester}
-                        className="flex items-center px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                        className="flex items-center justify-center px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors w-full sm:w-auto"
                       >
                         <Plus className="w-4 h-4 mr-1" />
                         Add
@@ -280,7 +306,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 {/* Quick Actions */}
                 <div>
                   <h3 className="text-lg font-medium text-gray-800 mb-3">Quick Actions</h3>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <button 
                       onClick={() => alert('Add New Subject feature coming soon!')}
                       className="p-3 bg-blue-50 border border-blue-200 rounded-lg text-blue-700 hover:bg-blue-100 transition-colors"

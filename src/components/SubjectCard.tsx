@@ -25,51 +25,51 @@ const SubjectCard: React.FC<SubjectCardProps> = ({
 }) => {
   if (viewMode === 'list') {
     return (
-      <div className="bg-white border border-gray-300 hover:shadow-sm transition-shadow">
-        <div className="px-4 py-2 flex items-center justify-between">
-          <div className="flex items-center space-x-4 flex-1">
+      <div className="bg-white border border-gray-300 hover:shadow-sm transition-shadow mx-1 md:mx-0">
+        <div className="px-2 md:px-4 py-2 flex items-center justify-between flex-wrap gap-2">
+          <div className="flex items-center space-x-2 md:space-x-4 flex-1 min-w-0">
             <div className="flex items-center space-x-3">
               <div>
-                <h3 className="font-semibold text-gray-900 text-sm">
+                <h3 className="font-semibold text-gray-900 text-xs md:text-sm">
                   {subject.code}
                 </h3>
                 <span className="text-xs text-gray-600">{subject.credits} Credits</span>
               </div>
             </div>
-            <div className="flex-1">
-              <h4 className="font-medium text-gray-900 text-sm">
+            <div className="flex-1 min-w-0">
+              <h4 className="font-medium text-gray-900 text-xs md:text-sm truncate">
                 {subject.name}
               </h4>
               {subject.objective && (
-                <p className="text-xs text-gray-600 line-clamp-1">
+                <p className="text-xs text-gray-600 line-clamp-1 hidden md:block">
                   {subject.objective}
                 </p>
               )}
             </div>
-            <div className="flex items-center space-x-4 text-xs text-gray-500">
+            <div className="flex items-center space-x-2 md:space-x-4 text-xs text-gray-500">
               <span>{(subject.units || []).length} Units</span>
               <span>{notesCount} Notes</span>
               <span>{pdfsCount} PDFs</span>
             </div>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1 md:space-x-2 flex-shrink-0">
             <button
               onClick={() => onViewNotes(subject.code, semesterId)}
-              className="flex items-center px-2 py-1 bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs transition-colors"
+              className="flex items-center px-1 md:px-2 py-1 bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs transition-colors"
             >
-              <StickyNote className="w-4 h-4 mr-1" />
-              Notes
+              <StickyNote className="w-3 h-3 md:w-4 md:h-4 md:mr-1" />
+              <span className="hidden md:inline">Notes</span>
             </button>
             <button
               onClick={() => onViewPDFs(subject.code, semesterId)}
-              className="flex items-center px-2 py-1 bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs transition-colors"
+              className="flex items-center px-1 md:px-2 py-1 bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs transition-colors"
             >
-              <FileText className="w-4 h-4 mr-1" />
-              PDFs
+              <FileText className="w-3 h-3 md:w-4 md:h-4 md:mr-1" />
+              <span className="hidden md:inline">PDFs</span>
             </button>
             <button
               onClick={() => onReadSubject(subject, semesterId)}
-              className="px-3 py-1 bg-blue-600 text-white text-xs font-medium hover:bg-blue-700 transition-colors"
+              className="px-2 md:px-3 py-1 bg-blue-600 text-white text-xs font-medium hover:bg-blue-700 transition-colors"
             >
               View
             </button>
@@ -80,13 +80,13 @@ const SubjectCard: React.FC<SubjectCardProps> = ({
   }
 
   return (
-    <div className="bg-white border border-gray-300 hover:shadow-sm transition-shadow">
+    <div className="bg-white border border-gray-300 hover:shadow-sm transition-shadow mx-1 md:mx-0">
       {/* Card Header */}
-      <div className="px-3 py-2 border-b border-gray-200">
+      <div className="px-2 md:px-3 py-2 border-b border-gray-200">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div>
-              <h3 className="font-semibold text-gray-900 text-sm">
+              <h3 className="font-semibold text-gray-900 text-xs md:text-sm">
                 {subject.code}
               </h3>
               <span className="text-xs text-gray-600">{subject.credits} Credits</span>
@@ -94,7 +94,7 @@ const SubjectCard: React.FC<SubjectCardProps> = ({
           </div>
           <button
             onClick={() => onReadSubject(subject, semesterId)}
-            className="px-3 py-1 bg-blue-600 text-white text-xs font-medium hover:bg-blue-700 transition-colors"
+            className="px-2 md:px-3 py-1 bg-blue-600 text-white text-xs font-medium hover:bg-blue-700 transition-colors"
           >
             View
           </button>
@@ -102,13 +102,13 @@ const SubjectCard: React.FC<SubjectCardProps> = ({
       </div>
 
       {/* Card Body */}
-      <div className="p-3">
-        <h4 className="font-medium text-gray-900 mb-2 text-sm line-clamp-2">
+      <div className="p-2 md:p-3">
+        <h4 className="font-medium text-gray-900 mb-2 text-xs md:text-sm line-clamp-2">
           {subject.name}
         </h4>
         
         {subject.objective && (
-          <p className="text-xs text-gray-600 mb-3 line-clamp-2">
+          <p className="text-xs text-gray-600 mb-3 line-clamp-2 hidden md:block">
             {subject.objective}
           </p>
         )}
@@ -124,17 +124,19 @@ const SubjectCard: React.FC<SubjectCardProps> = ({
         <div className="flex items-center space-x-2">
           <button
             onClick={() => onViewNotes(subject.code, semesterId)}
-            className="flex items-center px-2 py-1 bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs transition-colors"
+            className="flex items-center px-1 md:px-2 py-1 bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs transition-colors flex-1 justify-center"
           >
-            <StickyNote className="w-4 h-4 mr-1" />
-            Notes ({notesCount})
+            <StickyNote className="w-3 h-3 md:w-4 md:h-4 md:mr-1" />
+            <span className="hidden md:inline">Notes ({notesCount})</span>
+            <span className="md:hidden">({notesCount})</span>
           </button>
           <button
             onClick={() => onViewPDFs(subject.code, semesterId)}
-            className="flex items-center px-2 py-1 bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs transition-colors"
+            className="flex items-center px-1 md:px-2 py-1 bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs transition-colors flex-1 justify-center"
           >
-            <FileText className="w-4 h-4 mr-1" />
-            PDFs ({pdfsCount})
+            <FileText className="w-3 h-3 md:w-4 md:h-4 md:mr-1" />
+            <span className="hidden md:inline">PDFs ({pdfsCount})</span>
+            <span className="md:hidden">({pdfsCount})</span>
           </button>
         </div>
       </div>
