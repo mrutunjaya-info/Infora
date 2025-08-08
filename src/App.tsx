@@ -13,6 +13,17 @@ import GovernmentHeader from './components/GovernmentHeader';
 import SettingsPanel from './components/SettingsPanel';
 
 function App() {
+  const [departmentName, setDepartmentName] = useState('Department of Bioinformatics');
+  const [programName, setProgramName] = useState('M.Sc. Bioinformatics Program');
+
+  // Load department info from localStorage on mount
+  React.useEffect(() => {
+    const savedDepartment = localStorage.getItem('department-name');
+    const savedProgram = localStorage.getItem('program-name');
+    if (savedDepartment) setDepartmentName(savedDepartment);
+    if (savedProgram) setProgramName(savedProgram);
+  }, []);
+
   const [selectedSemester, setSelectedSemester] = useState(1);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showSettings, setShowSettings] = useState(false);
@@ -79,19 +90,22 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-white text-gray-900 pt-32">
       {/* Government Header */}
-      <GovernmentHeader />
+      <GovernmentHeader 
+        departmentName={departmentName}
+        programName={programName}
+      />
 
       <main className="bg-white">
         {/* Main Content Area */}
-        <div className="w-full px-4 py-4">
+        <div className="w-full px-2 md:px-4 py-4">
           {currentSemester && (
             <>
               {/* Semester Header */}
-              <div className="bg-white border border-gray-300 mb-4">
+              <div className="bg-white border border-gray-300 mb-4 mx-1 md:mx-0">
                 <div className="px-4 py-2 border-b border-gray-200">
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between flex-wrap gap-2">
                     <div className="flex items-center space-x-3">
                       <h2 className="text-lg font-semibold text-gray-900">
                         {currentSemester.name}
@@ -100,7 +114,7 @@ function App() {
                         {currentSemester.totalCredits}
                       </span>
                     </div>
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-2 md:space-x-4 flex-wrap">
                       <span className="text-sm text-gray-600">
                         {(currentSemester.subjects || []).length} Subjects
                       </span>
@@ -117,7 +131,7 @@ function App() {
                       <select
                         value={selectedSemester}
                         onChange={(e) => setSelectedSemester(Number(e.target.value))}
-                        className="border border-gray-300 rounded px-2 py-1 text-sm"
+                        className="border border-gray-300 rounded px-2 py-1 text-sm w-full md:w-auto"
                       >
                         <option value={1}>Semester I</option>
                         <option value={2}>Semester II</option>
@@ -130,7 +144,7 @@ function App() {
               </div>
 
               {/* Subjects Grid */}
-              <div className={viewMode === 'grid' ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" : "space-y-2"}>
+              <div className={viewMode === 'grid' ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 px-1 md:px-0" : "space-y-2 px-1 md:px-0"}>
                 {(currentSemester.subjects || []).map((subject) => (
                   <SubjectCard
                     key={subject.code}
@@ -231,6 +245,10 @@ function App() {
       {/* Settings Panel */}
       {showSettings && (
         <SettingsPanel
+          departmentName={departmentName}
+          programName={programName}
+          onDepartmentChange={setDepartmentName}
+          onProgramChange={setProgramName}
           viewMode={viewMode}
           onViewModeChange={setViewMode}
           selectedSemester={selectedSemester}
