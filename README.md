@@ -47,7 +47,7 @@ A modern, feature-rich syllabus management system built for M.Sc. Bioinformatics
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/bioinformatics-syllabus.git
+   git clone https://github.com/mrutunjaya-info/bioinformatics-syllabus.git
    cd bioinformatics-syllabus
    ```
 
@@ -153,4 +153,4 @@ If you have any questions or need help, please:
 
 ---
 
-**Made with ❤️ for Bioinformatics Students**
+**Made with ❤️ for Bioinformatics Students By Mrutunjaya Pradhan**
