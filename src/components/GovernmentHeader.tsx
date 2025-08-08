@@ -68,7 +68,7 @@ const GovernmentHeader: React.FC<GovernmentHeaderProps> = ({
               <img 
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Emblem_of_India.svg/100px-Emblem_of_India.svg.png" 
                 alt="Government of India Emblem" 
-                className="w-8 h-8"
+                className="w-6 h-8"
               />
               <div>
                 <h1 className="text-xs md:text-sm font-bold">Bioinformatics of India</h1>
