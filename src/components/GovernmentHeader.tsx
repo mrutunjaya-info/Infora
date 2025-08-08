@@ -52,9 +52,9 @@ const GovernmentHeader: React.FC<GovernmentHeaderProps> = ({
         <div className="max-w-full mx-auto px-4 py-1">
           <div className="flex items-center justify-between text-xs flex-wrap">
             <div className="flex items-center space-x-4">
-              <span>Government of India</span>
+              <span>Bioinformatics of India</span>
               <span>•</span>
-              <span>Ministry of Education</span>
+              <span>Infora of Education</span>
             </div>
             <span>Last Updated: {new Date().toLocaleDateString('en-IN')}</span>
           </div>
@@ -71,18 +71,18 @@ const GovernmentHeader: React.FC<GovernmentHeaderProps> = ({
                 className="w-8 h-8"
               />
               <div>
-                <h1 className="text-xs md:text-sm font-bold">Government of India</h1>
-                <p className="text-xs hidden md:block">Ministry of Education • सत्यमेव जयते</p>
+                <h1 className="text-xs md:text-sm font-bold">Bioinformatics of India</h1>
+                <p className="text-xs hidden md:block">Infora of Education • सत्यमेव जयते</p>
               </div>
             </div>
 
             {/* Digital India Logo */}
             <div className="flex items-center space-x-3">
               <div className="text-right hidden md:block">
-                <div className="text-xs font-medium">Digital India Initiative</div>
+                <div className="text-xs font-medium"></div>
               </div>
               <img 
-                src="https://www.digitalindia.gov.in/themes/custom/digital_india/logo.png" 
+                src="https://www.ux4g.gov.in/assets/img/uxdt-logo/Preview-7.png" 
                 alt="Digital India" 
                 className="w-6 h-6"
                 onError={(e) => {
@@ -95,7 +95,7 @@ const GovernmentHeader: React.FC<GovernmentHeaderProps> = ({
 
         {/* Department Header */}
         <div className="max-w-full mx-auto px-4">
-          <div className="flex items-center justify-between flex-wrap bg-blue-800 text-white py-1 -mx-4 px-4">
+          <div className="flex items-center justify-between flex-wrap bg-blue-800 text-white py-0 -mx-4 px-1">
             <div>
               <h2 className="text-sm md:text-lg font-bold">{departmentName}</h2>
               <p className="text-xs opacity-90 hidden md:block">{programName} • Academic Management System</p>
