@@ -61,7 +61,7 @@ const GovernmentHeader: React.FC<GovernmentHeaderProps> = ({
         </div>
 
         {/* Main Header */}
-        <div className="max-w-full mx-auto px-4 py-1">
+        <div className="max-w-full mx-auto px-3 py-1">
           <div className="flex items-center justify-between flex-wrap">
             {/* Emblem */}
             <div className="flex items-center space-x-3">
