@@ -85,7 +85,7 @@ const GovernmentHeader: React.FC<GovernmentHeaderProps> = ({
                 <div className="text-xs font-medium"></div>
               </div>
               <img 
-                src="https://www.ux4g.gov.in/assets/img/uxdt-logo/Cloud_Preview.png" 
+                src="https://w7.pngwing.com/pngs/978/407/png-transparent-government-of-india-ministry-of-skill-development-and-entrepreneurship-national-skill-development-corporation-national-skill-development-agency-skill-company-text-hand-thumbnail.png" 
                 alt="Digital India" 
                 className="w-10 h-6"
                 onError={(e) => {
