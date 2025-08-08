@@ -60,6 +60,9 @@ const GovernmentHeader: React.FC<GovernmentHeaderProps> = ({
           </div>
         </div>
 
+        {/* Thin Divider Below Top Bar */}
+        <div className={`${isDarkMode ? 'border-gray-700' : 'border-gray-300'} border-b`} />
+
         {/* Main Header */}
         <div className="max-w-full mx-auto px-3 py-1">
           <div className="flex items-center justify-between flex-wrap">
