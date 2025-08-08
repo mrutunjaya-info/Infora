@@ -82,9 +82,9 @@ const GovernmentHeader: React.FC<GovernmentHeaderProps> = ({
                 <div className="text-xs font-medium"></div>
               </div>
               <img 
-                src="https://www.ux4g.gov.in/assets/img/uxdt-logo/Preview-7.png" 
+                src="https://www.ux4g.gov.in/assets/img/uxdt-logo/Cloud_Preview.png" 
                 alt="Digital India" 
-                className="w-6 h-6"
+                className="w-10 h-6"
                 onError={(e) => {
                   e.currentTarget.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Digital_India_logo.svg/100px-Digital_India_logo.svg.png";
                 }}
