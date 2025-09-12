@@ -99,7 +99,7 @@ const GovernmentHeader: React.FC<GovernmentHeaderProps> = ({
         <div className="max-w-full mx-auto px-4">
           <div className="flex items-center justify-between flex-wrap bg-blue-800 text-white py-0 -mx-4 px-1">
             <div>
-              <h2 className="text-sm md:text-lg font-bold">{departmentName}</h2>
+             
               <p className="text-xs opacity-90 hidden md:block">{programName} • Academic Management System</p>
             </div>
             <p className="text-xs">Academic Year 2024-25</p>
