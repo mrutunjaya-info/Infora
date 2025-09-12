@@ -71,11 +71,11 @@ const GovernmentHeader: React.FC<GovernmentHeaderProps> = ({
               <img 
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/SARS-CoV-2_without_background.png/1193px-SARS-CoV-2_without_background.png?20210922032455" 
                 alt="Government of India Emblem" 
-                className="w-6 h-8"
+                className="w-8 h-8"
               />
               <div>
                 <h1 className="text-xs md:text-sm font-bold">Bioinformatics of India</h1>
-                <p className="text-xs hidden md:block">Infora of Education • सत्यमेव जयते</p>
+                <p className="text-xs hidden md:block">Jīvavijñāna • जीव-विज्ञान</p>
               </div>
             </div>
 
@@ -85,8 +85,7 @@ const GovernmentHeader: React.FC<GovernmentHeaderProps> = ({
                 <div className="text-xs font-medium"></div>
               </div>
               <img 
-                src="https://w7.pngwing.com/pngs/978/407/png-transparent-government-of-india-ministry-of-skill-development-and-entrepreneurship-national-skill-development-corporation-national-skill-development-agency-skill-company-text-hand-thumbnail.png" 
-                alt="Digital India" 
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR51zLuB-1eDeoJrRdSOGhsEZkOXBnUzGPHBRKDbcvLMGw_T6eGrQ2fmPo&s=10" 
                 className="w-10 h-6"
                 onError={(e) => {
                   e.currentTarget.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Digital_India_logo.svg/100px-Digital_India_logo.svg.png";
@@ -96,17 +95,7 @@ const GovernmentHeader: React.FC<GovernmentHeaderProps> = ({
           </div>
         </div>
 
-        {/* Department Header */}
-        <div className="max-w-full mx-auto px-4">
-          <div className="flex items-center justify-between flex-wrap bg-blue-800 text-white py-0 -mx-4 px-1">
-            <div>
-              <h2 className="text-sm md:text-lg font-bold">{departmentName}</h2>
-              <p className="text-xs opacity-90 hidden md:block">{programName} • Academic Management System</p>
-            </div>
-            <p className="text-xs">Academic Year 2024-25</p>
-          </div>
-        </div>
-      </div>
+        
     </>
   );
 };
