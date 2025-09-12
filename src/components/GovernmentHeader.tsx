@@ -52,9 +52,9 @@ const GovernmentHeader: React.FC<GovernmentHeaderProps> = ({
         <div className="max-w-full mx-auto px-4 py-1">
           <div className="flex items-center justify-between text-xs flex-wrap">
             <div className="flex items-center space-x-4">
-              <span>Bioinformatics of India</span>
+              <span>Bioinformatics by Mrutunjaya.</span>
               <span>•</span>
-              <span>Infora of Education</span>
+              <span>Science</span>
             </div>
             <span>Last Updated: {new Date().toLocaleDateString('en-IN')}</span>
           </div>
@@ -69,7 +69,7 @@ const GovernmentHeader: React.FC<GovernmentHeaderProps> = ({
             {/* Emblem */}
             <div className="flex items-center space-x-3">
               <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Emblem_of_India.svg/100px-Emblem_of_India.svg.png" 
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/SARS-CoV-2_without_background.png/1193px-SARS-CoV-2_without_background.png?20210922032455" 
                 alt="Government of India Emblem" 
                 className="w-6 h-8"
               />
