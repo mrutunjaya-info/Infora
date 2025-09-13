@@ -70,7 +70,7 @@ const PDFManager: React.FC<PDFManagerProps> = ({
   return (
     <>
       <div className={`fixed inset-0 ${isDarkMode ? 'bg-black' : 'bg-black'} bg-opacity-50 z-40 flex items-center justify-center p-1`}>
-        <div className={`${isDarkMode ? 'bg-black border border-white' : 'bg-white'} rounded-lg shadow-xl w-full max-w-4xl h-[90vh] flex flex-col`}>
+        <div className={`${isDarkMode ? 'bg-black border border-white' : 'bg-white'} rounded-lg shadow-xl w-full max-w-4xl h-[75vh] flex flex-col`}>
           <div className="flex items-center justify-between p-4 border-b">
             <div>
               <h2 className={`text-xl font-semibold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>PDF Resources</h2>
